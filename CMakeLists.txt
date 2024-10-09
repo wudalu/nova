@@ -9,9 +9,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # 查找Python库
-find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
-
-# 查找pybind11
 find_package(pybind11 REQUIRED)
 
 # 添加源文件
@@ -33,11 +30,12 @@ target_include_directories(NOVA PRIVATE
     ${PROJECT_SOURCE_DIR}/network
     ${PROJECT_SOURCE_DIR}/3rd/kcp
     ${PROJECT_SOURCE_DIR}/3rd
+    ${PROJECT_SOURCE_DIR}/3rd/pybind11  # 添加本地 pybind11 头文件目录
     ${Python3_INCLUDE_DIRS}  # 添加 Python 头文件目录
 )
 
 # 链接库
-target_link_libraries(NOVA PRIVATE pybind11::embed Python3::Python)
+target_link_libraries(NOVA PRIVATE pybind11::embed)
 
 # 调试输出
 message(STATUS "LLVM_DIR: ${LLVM_DIR}")
