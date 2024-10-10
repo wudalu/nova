@@ -5,25 +5,21 @@
 
 // 基础线程类
 class BaseThread {
-protected:
-    std::thread thread;
-    std::atomic<bool> stop_flag{false};
-
 public:
-    virtual ~BaseThread() {
-        stop();
-        if (thread.joinable()) {
-            thread.join();
-        }
-    }
+    BaseThread() : stop_flag_(false) {}
+    virtual ~BaseThread() = default;
 
     virtual void start() = 0;
-
+    
     void stop() {
-        stop_flag.store(true);
+        stop_flag_ = true;
     }
 
     bool is_stopped() const {
-        return stop_flag.load();
+        return stop_flag_;
     }
+
+protected:
+    std::thread thread_;
+    std::atomic<bool> stop_flag_;
 };

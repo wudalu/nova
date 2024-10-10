@@ -5,37 +5,32 @@
 #include "include/macros.h"
 #include "concurrentqueue/concurrentqueue.h"
 
-// 网络处理器类
 class NetworkProcessor {
-private:
-    std::vector<std::unique_ptr<KcpReader>> reader_threads;
-    std::vector<std::unique_ptr<WorkerThread>> worker_threads;
-    moodycamel::ConcurrentQueue<std::string> request_queue;
-
 public:
     NetworkProcessor(const std::string& address = DEFAULT_ADDRESS, 
-                     unsigned short port = DEFAULT_PORT) {
-        // 创建读取线程
-        for (int i = 0; i < READER_THREAD_COUNT; ++i) {
-            reader_threads.emplace_back(std::make_unique<KcpReader>(
-                address.c_str(), port, request_queue));
-        }
+                     unsigned short port = DEFAULT_PORT);
+    ~NetworkProcessor() = default;
 
-        // 创建工作线程
-        for (int i = 0; i < WORKER_THREAD_COUNT; ++i) {
-            worker_threads.emplace_back(std::make_unique<WorkerThread>(request_queue));
-        }
-
-        // 启动所有线程
-        for (auto& thread : reader_threads) {
-            thread->start();
-        }
-        for (auto& thread : worker_threads) {
-            thread->start();
-        }
-    }
-
-    ~NetworkProcessor() {
-        // 析构函数中的停止逻辑会自动调用
-    }
+private:
+    std::vector<std::unique_ptr<KcpReader>> reader_threads_;
+    std::vector<std::unique_ptr<WorkerThread>> worker_threads_;
+    moodycamel::ConcurrentQueue<std::string> request_queue_;
 };
+
+NetworkProcessor::NetworkProcessor(const std::string& address, unsigned short port) {
+    for (int i = 0; i < READER_THREAD_COUNT; ++i) {
+        reader_threads_.emplace_back(std::make_unique<KcpReader>(
+            address.c_str(), port, request_queue_));
+    }
+
+    for (int i = 0; i < WORKER_THREAD_COUNT; ++i) {
+        worker_threads_.emplace_back(std::make_unique<WorkerThread>(request_queue_));
+    }
+
+    for (auto& thread : reader_threads_) {
+        thread->start();
+    }
+    for (auto& thread : worker_threads_) {
+        thread->start();
+    }
+}
