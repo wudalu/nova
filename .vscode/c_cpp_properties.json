@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/3rd/concurrentqueue",
+                "${workspaceFolder}/3rd/kcp",
+                "${workspaceFolder}/3rd/pybind11",
+                "${workspaceFolder}/3rd/nlohmann",
+                "/usr/local/include",
+                "/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/include/python3.9"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}

@@ -33,3 +33,6 @@
 
 # 忽略 build 目录
 build/	
+
+# 忽略 protobuf 目录
+3rd/protobuf/

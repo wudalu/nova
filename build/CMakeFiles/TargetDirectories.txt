@@ -1,0 +1,3 @@
+/Users/bytedance/OneDrive/nova/build/CMakeFiles/NOVA.dir
+/Users/bytedance/OneDrive/nova/build/CMakeFiles/edit_cache.dir
+/Users/bytedance/OneDrive/nova/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package mypacket;
+
+message Request {
+    string method = 1;	
+    string payload = 2;
+}
+
+message Response {
+    string response_data = 1;
+}
+
+service PacketService {
+    rpc ProcessData(Request) returns (Response);
+    rpc StreamData(stream Request) returns (stream Response);
+    rpc ValidatePacket(Request) returns (Response);
+}
